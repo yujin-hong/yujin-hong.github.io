@@ -1,6 +1,26 @@
 // Add your javascript here
 // Don't forget to add it into respective layouts where this js file is needed
 $(document).ready(function () {
+    let brideAccountDisplayStatus=false;
+    let groomAccountDisplayStatus=false;
+    $('#toggle-groom-account-info').click(function () {
+        groomAccountDisplayStatus = !groomAccountDisplayStatus;
+        if(groomAccountDisplayStatus) {
+            $('#groom-account-info').show();
+        } else {
+            $('#groom-account-info').hide();
+        }
+    });
+
+    $('#toggle-bride-account-info').click(function () {
+        brideAccountDisplayStatus = !brideAccountDisplayStatus;
+        if(brideAccountDisplayStatus) {
+            $('#bride-account-info').show();
+        } else {
+            $('#bride-account-info').hide();
+        }
+    });
+
     $("#map-image").on("click")
     {
 
