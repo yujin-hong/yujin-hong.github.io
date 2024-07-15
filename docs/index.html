@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href="css/ekko-lightbox.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/calendar-theme1.css"/>
     <link href="styles/main.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gamja+Flower|Gugi|Noto+Serif+KR|Stylish|Sunflower:300"
           rel="stylesheet">
@@ -24,6 +25,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/calendar.min.js"></script>
+    <script type="text/javascript" src="js/caleandar.js"></script>
     <script type="text/javascript">
         function sendMail() {
 
@@ -53,9 +56,18 @@
                 });
             return result;
         }
+        const marriageDate = new Date(2025, 2, 15);
 
         $(document).ready(function () {
 
+            // caleandar()
+            // cale
+            var events = [
+                {'Date': marriageDate, 'Title': '💚D-Day💚', 'Link': 'https://yujin-hong.github.io/'},
+            ];
+            let element = document.getElementById('calendar');
+            caleandar(element, events, {});
+            showDaysUntilDDay();
             function getText(){
                 var result = null;
                 $.ajax( { url: "https://raw.githubusercontent.com/AndersonChoi/wedding-card/master/README.md",
@@ -80,9 +92,25 @@
             }
         });
 
+        function calculateDaysToMarriageDate() {
+            // Parse the dates
+            const firstDate = marriageDate;
+            const secondDate = new Date();
 
+            // Calculate the difference in milliseconds
+            const differenceInMilliseconds = Math.abs(secondDate - firstDate);
 
+            // Convert milliseconds to days
+            const millisecondsPerDay = 1000 * 60 * 60 * 24;
+            const differenceInDays = Math.ceil(differenceInMilliseconds / millisecondsPerDay);
 
+            return differenceInDays;
+        }
+
+        function showDaysUntilDDay() {
+            const daysUntilDDay = calculateDaysToMarriageDate();
+            document.getElementById("dday-result").innerText = `D-${daysUntilDDay}`;
+        }
     </script>
 </head>
 
@@ -103,7 +131,7 @@
                     </div>
                     <p class="h2 mt-5"
                        style="font-family: 'Noto Serif KR', serif; font-size:0.8em; letter-spacing:-1px">
-                        <b style="font-size:1.4em;">2025년 03월 18일 일요일 오후 1시 00분</b>
+                        <b style="font-size:1.4em;">2025년 03월 18일 일요일 오후 1시</b>
                         <br><br>
                         <b style="font-size:1.4em;">호교회</b>
                     </p>
@@ -111,11 +139,11 @@
             </div>
         </div>
         <div class="ww-section bg-light" id="events">
-            <div class="container ww-wedding-event">
-                <img alt="Groom" class="img-fluid" src="images/flower.png"/>
-                <h2 class="h4 text-center pb-3 ww-title" style="font-family: 'Noto Serif KR', serif;">초대합니다</h2>
+            <div class="container ww-wedding-event text-center">
+                <img alt="Groom" class="img-fluid" src="images/flower2.png" style="width:50px;"/>
+                <h2 class="h4 text-center pb-3 pt-5 ww-title" style="font-family: 'Noto Serif KR', serif;">초대합니다</h2>
                 <div class="col text-center mb-5">
-                    <h6 style="font-family: 'Noto Serif KR', serif; font-size:0.8em; letter-spacing:-1px">
+                    <h6 style="font-family: 'Noto Serif KR', serif; font-size:0.9em; letter-spacing:-0.5px">
                         봄꽃이 만개하고 따스한 햇살이 내려오는 아름다운 계절,<br>
                         저희 두 사람의 사랑도 꽃을 피워 결실을 맺게 되었습니다. <br>
                         화사한 꽃향기와 포근한 봄바람이 가득한 날, <br>
@@ -176,10 +204,18 @@
         </div>
         <div class="ww-section bg-light" id="date">
             <div class="container ww-wedding-event">
-                <p>대충 캘린더</p>
-                <div class="col text-center mb-5">
+                <h2 class="h1 text-center ww-title" style="font-family: 'Great Vibes', cursive; font-size:1.4em">Schedule</h2>
+                <div class="text-center" style="font-family: 'Noto Serif KR', serif; font-size:1.0em; letter-spacing:-0.5px">
+                    2024.03.15 <br>
+                    일요일 오후 1:00
+                </div>
+                <hr>
+                <div class="col justify-content-lg-center pt-lg-3" style="display:flex; font-family: 'Roboto Condensed', sans-serif; font-size:1.0em;" id="calendar">
+                </div>
+                <hr>
+                <div class="col text-center mb-3">
                     <h6 style="font-family: 'Noto Serif KR', serif; font-size:1.0em; letter-spacing:-1px">
-                        이재윤 <i class="fa fa-heart"></i> 홍유진의 예식일 D-10
+                        이재윤 <i class="fa fa-heart"></i> 홍유진의 예식일 <span style="color:red;" id="dday-result"></span>
                     </h6>
                 </div>
             </div>
@@ -188,7 +224,6 @@
             <div class="ww-photo-gallery">
                 <div class="container">
                     <h2 class="h1 text-center ww-title" style="font-family: 'Great Vibes', cursive; font-size:1.4em">Location</h2>
-
                     <div class="col text-center mt-5 mb-5">
                         <h6 style="font-family: 'Noto Serif KR', serif; font-size:1.4em; letter-spacing:-1px">
                             서울대학교 호암교수회관
@@ -197,7 +232,6 @@
                             서울특별시 관악구 어쩌구 ...
                         </h6>
                     </div>
-
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="my-3">
@@ -229,9 +263,11 @@
             </div>
         </div>
         <div class="ww-section bg-light" id="account">
+            <div class="ww-photo-gallery">
+                <div class="container">
             <h2 class="h1 text-center ww-title" style="font-family: 'Noto Serif KR', serif; font-size:1.4em">마음 전하는 곳</h2>
             <div class="col text-center mb-5 mt-5">
-                <h6 style="font-family: 'Noto Serif KR', serif; font-size:0.8em; letter-spacing:-0.5px">
+                <h6 style="font-family: 'Noto Serif KR', serif; font-size:0.9em; letter-spacing:-0.5px">
                     저희의 소중한 결혼식에 함께해 주시지 못하는 분들을 위해, <br>
                     아래 계좌번호를 기입하였습니다.<br>
                     새로운 시작을 응원해 주시는 마음을 감사히 받겠습니다. <br>
@@ -269,8 +305,8 @@
                 </div>
 
                 <div class="mb-2" style="font-family: 'Noto Serif KR', serif; font-size:1.0em; letter-spacing:-1px">
-                    <div id="toggle-groom-account-info" style="background-color: #b6b7b9; border-radius: 10px; padding: 5px;"> 신랑측 계좌번호 <span style="float:right;">▾&nbsp;</span></div>
-                    <div id="groom-account-info" style="display:none;">
+                    <div id="toggle-bride-account-info" style="background-color: #b6b7b9; border-radius: 10px; padding: 5px;"> 신부측 계좌번호 <span style="float:right;">▾&nbsp;</span></div>
+                    <div id="bride-account-info" style="display:none;">
                         <div class="bg-light row mt-2 mb-2">
                             <div class="col-9 text-left">
                                 우리 123412034314 <br> 홍유진
@@ -302,7 +338,9 @@
                 <hr>
                 <p style="font-size:0.6em"> <i class="fa fa-comment" ></i> 카카오톡으로 공유하기 </p>
                 <p style="font-size:0.6em"> <i class="fa fa-link" ></i>  청첩장 링크 복사하기 </p>
-                <p class="mt-5" style="font-family: 'Great Vibes', cursive; font-size:0.5em"> Made By Yujin & Jaeyoon </p>
+                <p class="mt-5" style="font-family: 'Great Vibes', cursive; font-size:0.9em"> Made By Yujin & Jaeyoon </p>
+            </div>
+                </div>
             </div>
 
         </div>
